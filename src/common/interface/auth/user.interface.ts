@@ -5,3 +5,15 @@ export interface IUser extends BaseInterface {
     email: string;
     password: string;
 }
+
+
+export interface IUserSingUp {
+    username: string;
+    password: string;
+    email:string;
+}
+
+export interface IUserSingIn{
+    username:string;
+    password:string;
+}

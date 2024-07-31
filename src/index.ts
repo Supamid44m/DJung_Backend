@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv';
 import path from 'path';
 import router from './router';
 import { sequelize } from './common/provider/db.provider';
+import bodyParser from 'body-parser';
+import cors from "cors"
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
@@ -10,8 +12,16 @@ const PORT = process.env.PORT ?? 5555
 
 const app: Application = express()
 
+const corsOptions = {
+  origin: "http://localhost:8080", 
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
 
+app.use(bodyParser.json())
+app.use(cors(corsOptions))
 app.use(router)
+
 const startServer = async () => {
   try {
     // Authenticate the connection to the database

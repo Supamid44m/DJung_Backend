@@ -3,8 +3,8 @@ import { AuthController } from "../../controller/auth";
 const useRouter = Router();
 const authController =  new AuthController
 
-useRouter.get('/',authController.signInController)
-useRouter.post('/',)
+
+useRouter.post('/signup',authController.signup)
 
 
 export default useRouter
