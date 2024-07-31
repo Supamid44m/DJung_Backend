@@ -1,4 +1,3 @@
-import { Sequelize } from "sequelize";
 import type { SequelizeOptions } from "sequelize-typescript";
 
 export const dbConfig: SequelizeOptions = {
