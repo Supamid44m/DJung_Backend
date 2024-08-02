@@ -22,6 +22,12 @@ app.use(bodyParser.json())
 app.use(cors(corsOptions))
 app.use(router)
 
+app.listen(PORT, async() => {
+  await sequelize.authenticate();
+  await sequelize.sync({ alter: true });
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
+
 const startServer = async () => {
   try {
     // Authenticate the connection to the database
@@ -42,4 +48,4 @@ const startServer = async () => {
   }
 };
 
-startServer()
+// startServer()

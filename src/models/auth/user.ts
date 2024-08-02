@@ -13,7 +13,8 @@ export class User extends Model<IUser> implements IUser {
     @Column(DataType.INTEGER)
     id!: number;
 
-    @Column(DataType.STRING)
+    
+    @Column({type:DataType.STRING,unique:true})
     username!: string;
 
     @Column(DataType.STRING)

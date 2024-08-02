@@ -2,7 +2,7 @@ import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, 
 import { User } from '../auth/user'; // Import User model if necessary
 import { IMessage } from '../../common/interface/messages/message.interface';
 import { IUser } from '../../common/interface/auth/user.interface';
-import { MessageUserRelationShip } from './messageUser';
+import { MessageUserLikedRelationShip } from './messageUser';
 
 @Table({
   tableName: 'messages',
@@ -24,10 +24,10 @@ export class Message extends Model<IMessage> implements IMessage {
   @Column(DataType.INTEGER)
   createdById!: number | null;
 
-  @BelongsTo(() => User, 'createdById')
-  createdBy!: User | null;
+  @Column(DataType.STRING)
+  createdBy!: string | null;
 
-  @BelongsToMany(() => User, () => MessageUserRelationShip)
+  @BelongsToMany(() => User, () => MessageUserLikedRelationShip)
   likedBy!: User[];
 
   @CreatedAt
