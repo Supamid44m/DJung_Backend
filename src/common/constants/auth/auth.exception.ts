@@ -1,3 +1,5 @@
 export enum AuthException{
-    EmailAlreadyExists = 'Email already exists'
+    UsernameOrPasswordInvalid ='Username or Password Invalid',
+    EmailAlreadyExists = 'Email already exists',
+    UserNotFoung = 'User not Found',
 }

@@ -4,34 +4,37 @@ import { IMessage } from '../../common/interface/messages/message.interface';
 import { IUser } from '../../common/interface/auth/user.interface';
 import { MessageUserRelationShip } from './messageUser';
 
-@Table({ tableName: 'messages' })
+@Table({
+  tableName: 'messages',
+  modelName: 'Message'
+})
 export class Message extends Model<IMessage> implements IMessage {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
-  id!: number; 
+  id!: number;
 
   @Column(DataType.STRING)
-  message!: string | null; 
+  message!: string | null;
 
   @Column(DataType.BOOLEAN)
   isAnonymous!: boolean;
 
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)
-  createdById!: number | null; 
+  createdById!: number | null;
 
   @BelongsTo(() => User, 'createdById')
   createdBy!: User | null;
 
-  @BelongsToMany(() => User, () => MessageUserRelationShip) 
+  @BelongsToMany(() => User, () => MessageUserRelationShip)
   likedBy!: User[];
 
   @CreatedAt
   @Column(DataType.DATE)
-  createdAt?: Date; 
+  createdAt?: Date;
 
   @UpdatedAt
   @Column(DataType.DATE)
-  updatedAt?: Date; 
+  updatedAt?: Date;
 }

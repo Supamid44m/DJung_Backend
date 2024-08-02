@@ -3,30 +3,37 @@ import { AutoIncrement, Column, CreatedAt, DataType, Model, NotNull, PrimaryKey,
 
 
 @Table({
-    tableName:'users',
-    modelName:'User'
+    tableName: 'users',
+    modelName: 'User'
 })
-export class User extends Model<IUser> implements IUser{
+export class User extends Model<IUser> implements IUser {
 
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
     id!: number;
-  
+
     @Column(DataType.STRING)
     username!: string;
-  
+
     @Column(DataType.STRING)
     email!: string;
-  
+
     @Column(DataType.STRING)
     password!: string;
-  
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+        defaultValue: null
+    })
+    role!: string | null;
+
     @CreatedAt
     @Column(DataType.DATE)
     createdAt!: Date;
-  
-    @UpdatedAt 
+
+    @UpdatedAt
     @Column(DataType.DATE)
     updatedAt!: Date;
 
