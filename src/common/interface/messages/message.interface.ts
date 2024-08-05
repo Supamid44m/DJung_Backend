@@ -23,3 +23,7 @@ export interface IMessageResponse extends BaseInterface {
   createdBy: string | null;
   createdById: number | null;
 }
+
+export interface ILikeMessage extends BaseInterface {
+  userId: number
+}

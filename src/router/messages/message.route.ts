@@ -6,4 +6,6 @@ const messageController = new MessageController()
 
   messageRouter.get("/",messageController.getAllMessages)
   messageRouter.post("/create",messageController.createMessage)
+  messageRouter.post("/:id/like",messageController.likeMessage)
+  messageRouter.post("/:id/unlike",messageController.unlikeMessage)
 export default messageRouter  
