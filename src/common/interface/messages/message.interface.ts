@@ -24,6 +24,6 @@ export interface IMessageResponse extends BaseInterface {
   createdById: number | null;
 }
 
-export interface ILikeMessage extends BaseInterface {
+export interface ILikeUnLikeMessage extends BaseInterface {
   userId: number
 }

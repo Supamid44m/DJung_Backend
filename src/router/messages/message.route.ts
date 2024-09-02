@@ -4,6 +4,7 @@ import { MessageController } from "../../controller/messages";
 const messageRouter = Router()
 const messageController = new MessageController()
 
+  messageRouter.get("/:id",messageController.getMessageByid)
   messageRouter.get("/",messageController.getAllMessages)
   messageRouter.post("/create",messageController.createMessage)
   messageRouter.post("/:id/like",messageController.likeMessage)

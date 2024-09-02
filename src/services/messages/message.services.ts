@@ -1,6 +1,5 @@
 import { MessagesException } from "../../common/constants/messages/messages.exception";
 import {
-  ILikeMessage,
   IMessage,
   IMessageCreate,
   IMessageResponse,
@@ -15,6 +14,13 @@ export class MessageService {
   private messageUserRelationShip = MessageUserLikedRelationShip;
   private userDb = User;
 
+  public async getMessageById(id: string): Promise<any> {
+    const messages = await this.messageDb.findOne({ where: { id } });
+    if (isNullOrUndefined(messages)) {
+      throw new Error(MessagesException.MessageNotFound);
+    }
+    return [messages];
+  }
   public async getAllMessages(): Promise<IMessageResponse[]> {
     const messages = await this.messageDb.findAll({});
     const messageRespone = await this.fullfillMessageResponse(messages);
@@ -49,7 +55,7 @@ export class MessageService {
     message: Message
   ): Promise<void | Message> {
     const userLikedArray: Array<User> = [];
-    const messageId = message.id;
+    const messageId = message?.id;
     const messageUserLiked = await this.messageUserRelationShip.findAll({
       where: { messageId: messageId },
     });
@@ -60,23 +66,28 @@ export class MessageService {
         userLikedArray.push(userLiked);
       }
     }
-    message.setDataValue('likedBy', userLikedArray);
+    message.setDataValue("likedBy", userLikedArray);
   }
 
-  public async likeMessage(userId: number, messageId: number): Promise<{ message: string[] }> {
-
-    const user = await this.userDb.findOne({ where: { id: userId } })
-    const message = await this.messageDb.findOne({ where: { id: messageId } })
+  public async likeMessage(
+    userId: number,
+    messageId: number
+  ): Promise<{ message: string[] }> {
+    const user = await this.userDb.findOne({ where: { id: userId } });
+    const message = await this.messageDb.findOne({ where: { id: messageId } });
 
     if (!user) {
-      throw new Error(MessagesException.UserNotFound)
+      throw new Error(MessagesException.UserNotFound);
     }
 
     if (!message) {
-      throw new Error(MessagesException.MessageNotFound)
+      throw new Error(MessagesException.MessagesNotFound);
     }
 
-    const isUserAlreadyLiked = await this.checkIsUserAlreadyLiked(userId, messageId)
+    const isUserAlreadyLiked = await this.checkIsUserAlreadyLiked(
+      userId,
+      messageId
+    );
     if (isUserAlreadyLiked) {
       throw new Error(MessagesException.UserAlreadyLikedMessage);
     }
@@ -84,33 +95,37 @@ export class MessageService {
     return { message: [`Liked message:${message?.message} successfully`] };
   }
 
-
-
-  public async unlikeMessage(userId: number, messageId: number):Promise<any> {
-    const user = await this.userDb.findOne({ where: { id: userId } })
-    const message = await this.messageDb.findOne({ where: { id: messageId } })
+  public async unlikeMessage(userId: number, messageId: number): Promise<any> {
+    const user = await this.userDb.findOne({ where: { id: userId } });
+    const message = await this.messageDb.findOne({ where: { id: messageId } });
 
     if (!user) {
-      throw new Error(MessagesException.UserNotFound)
+      throw new Error(MessagesException.UserNotFound);
     }
 
     if (!message) {
-      throw new Error(MessagesException.MessageNotFound)
+      throw new Error(MessagesException.MessagesNotFound);
     }
 
-    const isUserAlreadyLiked = await this.checkIsUserAlreadyLiked(userId, messageId)
+    const isUserAlreadyLiked = await this.checkIsUserAlreadyLiked(
+      userId,
+      messageId
+    );
     if (isUserAlreadyLiked) {
       await this.messageUserRelationShip.destroy({
         where: { userId, messageId },
       });
     }
     return { message: [`Unliked message:${message?.message} successfully`] };
-    
   }
 
-  private async checkIsUserAlreadyLiked(userId: number, messageId: number): Promise<boolean> {
-    const isUserAlreadyLiked = await this.messageUserRelationShip.findOne({ where: { userId, messageId }, })
-    return isUserAlreadyLiked ? true : false
-
+  private async checkIsUserAlreadyLiked(
+    userId: number,
+    messageId: number
+  ): Promise<boolean> {
+    const isUserAlreadyLiked = await this.messageUserRelationShip.findOne({
+      where: { userId, messageId },
+    });
+    return isUserAlreadyLiked ? true : false;
   }
 }

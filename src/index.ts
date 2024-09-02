@@ -13,19 +13,20 @@ const PORT = process.env.PORT ?? 5555
 const app: Application = express()
 
 const corsOptions = {
-  origin: "http://localhost:8080", 
+  origin: "*", 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
 
 app.use(bodyParser.json())
 app.use(cors(corsOptions))
-app.use(router)
+app.use('/api/v1', router)
+
 
 app.listen(PORT, async() => {
   await sequelize.authenticate();
   await sequelize.sync({ alter: true });
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}/api/v1`);
 });
 
 const startServer = async () => {
