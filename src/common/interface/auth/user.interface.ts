@@ -1,7 +1,7 @@
 import { BaseInterface } from "../common/base.interface";
 
 export interface IUser extends BaseInterface {
-    username: string;
+    userName: string;
     email: string;
     password: string;
     role:string | null;
@@ -9,13 +9,13 @@ export interface IUser extends BaseInterface {
 
 
 export interface IUserSingUp {
-    username: string;
+    userName: string;
     password: string;
     email:string;
     role:string | null;
 }
 
 export interface IUserSingIn{
-    username:string;
+    userName:string;
     password:string;
 }

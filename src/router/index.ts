@@ -6,9 +6,6 @@ import authRouter from "./auth/auth.route";
 
 const router = Router();
 
-
-
-
 router.get('/',(req,res)=>{
     res.send("DJUNG-API")
 })

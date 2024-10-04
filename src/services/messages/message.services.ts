@@ -39,8 +39,13 @@ export class MessageService {
       const isAnonymouseCreate = this.checkIsAnonymousCreate(message);
 
       if (isAnonymouseCreate) {
-        message.createdBy = null;
-        message.createdById = null;
+        message.createdBy = null
+        message.createdById = null
+      } else {
+        const userName = await this.userDb.findOne({
+          where: { id: Number(message.createdById) },
+        });
+        message.createdBy = userName?.userName as string;
       }
       await this.fullfillMessageUserLiked(message);
     }

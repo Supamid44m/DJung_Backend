@@ -15,7 +15,7 @@ export class User extends Model<IUser> implements IUser {
 
     
     @Column({type:DataType.STRING,unique:true})
-    username!: string;
+    userName!: string;
 
     @Column(DataType.STRING)
     email!: string;

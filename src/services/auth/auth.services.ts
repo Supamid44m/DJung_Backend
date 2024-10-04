@@ -17,7 +17,7 @@ export class AuthService {
   public async signUp(body: IUserSingUp): Promise<void> {
     try {
       const singUpBody: IUser = body;
-      const username = body.username;
+      const username = body.userName;
       const email = body.email;
       const password = body.password;
       const role = body.role ?? "User";
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   public async isDuplicateUsername(username: string): Promise<boolean> {
-    const isUsernameExist = await this.db.findOne({ where: { username: username },
+    const isUsernameExist = await this.db.findOne({ where: { userName: username },
     });
     return isUsernameExist ? true : false;
   }
